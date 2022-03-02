@@ -1,0 +1,141 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.tableFixHead {
+    overflow-y: auto;
+    height: 25%;
+}
+.tableFixHead thead th {
+    position: sticky;
+    top: 0;
+}
+table {
+    border-collapse: collapse;
+    width: 65%;
+	margin-left: auto;
+    margin-right: auto;
+	
+}
+th, td {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+}
+th {
+    background: #eee;
+}
+td {
+    text-align: center;
+}
+div, button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+</style>
+</head>
+  <body>
+    <div class="tableFixHead">
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>User Name</th>
+			<th>User Email</th>
+			<th>User Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.1</td>
+            <td>2.1</td>
+			<td>2.1</td>
+			<td>2.1</td>
+          </tr>
+          <tr>
+            <td>1.2</td>
+            <td>2.2</td>
+			<td>2.1</td>
+			<td>2.1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+	<div class="tableFixHead">
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>User Name</th>
+			<th>User Email</th>
+			<th>User Role</th>
+		  </tr>
+          <tr id="selectedUserRow">
+            <td>Bane</td>
+            <td>Bane@thedarknes.com</td>
+			<td>Bane@thedarknes.com</td>
+			<td>Back Breaker</td>
+          </tr>
+		  <tr id="selectedUserform">
+            <td><input type="text" value="Bane" name="userFullName"></td>
+            <td><input type="text" value="Bane@thedarknes.com" name="userName"></td>
+			<td><input type="text" value="Bane@thedarknes.com" name="userEmail"></td>
+			<td><input type="text" value="Back Breaker" name="userRole"></td>
+          </tr>
+		  <tr>
+		    <td><button id="editButton" onclick="buttonEditApplyToggle()" type="button">Edit</button><button id="cancelButton" onclick="buttonEditApplyToggle()" type="button">Cancel</button></td>
+			<td><button id="applyButton" onclick="buttonEditApplyToggle()" type="button">Apply</button></td>
+			<td></td>
+			<td><button id="deleteButton" type="button">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+	  <form method="GET" id="selectedUserform"></form>
+    </div>
+	
+	<script>	
+	window.onload = function() {
+	  var accessKey = "e25e8cea7e9e875bca51ba75af30b20d390b1ae28d7e2f23722486b6e282d333";
+	  var secretKey = "c3896be42f21b5b453031ba1ca7bd00da60e3dcbdc363f63ccacbd98c79c5453";
+	  document.getElementById("applyButton").style.display = "none";
+	  document.getElementById("cancelButton").style.display = "none";
+	  document.getElementById("selectedUserform").style.display = "none";
+	  
+	  fetch('http://127.0.0.1:8088/cgi-bin/usersList.py')
+      .then(response => response.json())
+      .then(response =>
+	    for (var key in response){
+		  console.log(key);
+		}
+	  )
+	  .catch(err => console.error(err));
+	}
+	  
+	  
+	function buttonEditApplyToggle() {
+    var editButton = document.getElementById("editButton");
+	var applyButton = document.getElementById("applyButton");
+	var cancelButton = document.getElementById("cancelButton");
+	var selectedUserRow = document.getElementById("selectedUserRow");
+	var selectedUserform = document.getElementById("selectedUserform");
+    if (editButton.style.display === "none") {
+      editButton.style.display = "block";
+	  applyButton.style.display = "none";
+	  cancelButton.style.display = "none";
+	  selectedUserRow.style.display = "table-row";
+	  selectedUserform.style.display = "none";
+	  
+	  
+    } else {
+      editButton.style.display = "none";
+	  applyButton.style.display = "block";
+	  cancelButton.style.display = "block";
+	  selectedUserRow.style.display = "none";
+	  selectedUserform.style.display = "table-row";
+	  
+    }
+    }
+	</script>
+	
+  </body>
+</html>
